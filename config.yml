@@ -1,0 +1,113 @@
+#########################################################
+# Configuration file for pointing to different text data
+# sets used for CNN text classification
+#
+# Code source: https://github.com/dennybritz/cnn-text-classification-tf
+# File name: config.yml
+#########################################################
+
+#########################################################
+# NOTES: 1. Change path variable under word_embeddings/word2vec
+# and word_embeddings/glove to point to location of
+# embedding vectors
+#
+# 2. Change datasets/default to the dataset that you want
+# to train and test with
+#########################################################
+
+
+word_embeddings:
+  # Two types of word embedding algorithm (word2vec and glove) are supported.
+  # Just set the default to empty string to disable the word embeddings
+  default: word2vec
+  word2vec:
+    path: /home/cmanticuno/pdghcc/cnn-text-classification-tf/data/input/word_embeddings/GoogleNews-vectors-negative300.bin
+    dimension: 300
+    binary: True
+  glove:
+    path: ../../data/glove.6B.100d.txt
+    dimension: 100
+    length: 400000
+
+datasets:
+  # Support currently 3 datasets: mrpolarity, 20newsgroup and localdata
+  # Next line: comment out the datasets not used
+  default: mrpolarity #mrpolarity #spamham #20newsgroup #rcv1 #email #dbpedia
+  spamham:
+    spam_file:
+      path: 'data/spamham/spamham.spam'
+    ham_file:
+      path: 'data/spamham/spamham.ham'
+    spam_file_eval:
+      path: 'data/spamham/spamham.spam.eval'
+    ham_file_eval:
+      path: 'data/spamham/spamham.ham.eval'
+  mrpolarity:
+    positive_data_file:
+      path: "data/rt-polaritydata/rt-polarity.pos"
+      info: "Data source for the positive data"
+    negative_data_file:
+      path: "data/rt-polaritydata/rt-polarity.neg"
+      info: "Data source for the negative data"
+  20newsgroup:
+    # The dataset includes following 20 newsgroups:
+    # alt.atheism, comp.windows.x, rec.sport.hockey, soc.religion.christian
+    # comp.graphics, misc.forsale, sci.crypt, talk.politics.guns
+    # comp.os.ms-windows.misc, rec.autos, sci.electronics, talk.politics.mideast
+    # comp.sys.ibm.pc.hardware, rec.motorcycles, sci.med, talk.politics.misc
+    # comp.sys.mac.hardware, rec.sport.baseball, sci.space, talk.religion.misc
+    categories:
+      - alt.atheism
+      - comp.graphics
+      - sci.med
+      - soc.religion.christian
+    shuffle: True
+    random_state: 42
+  rcv1:
+    # Reuters dataset with newswires categorized into 103 classes, each newswire
+    # can be classified into multiple subclasses
+    categories:
+      - C15
+      - CCAT
+      - E21
+      - ECAT
+      - GCAT
+      - M11
+    shuffle: True
+    random_state: 42
+  dbpedia:
+    # limit parameter gives the number of entries in each category to read
+    train_file:
+      path: "data/dbpedia/train.csv"
+      limit: 5000
+      info: Training set for dbpedia with 14 categories
+    test_file:
+      path: "data/dbpedia/test.csv"
+      limit: 200
+      info: Test for dbpedia with 14 categories
+  email:
+    container_path: "data/input/email"
+    categories:
+      - short_spam
+      - short_ham
+    shuffle: True
+    random_state: 42
+  localdata:
+    # Load text files with categories as subfolder names.
+    # Individual samples are assumed to be files stored
+    # a two levels folder structure such as the following:
+    # container_folder/
+    #   category_1_folder/
+    #     file_1.txt file_2.txt ... file_42.txt
+    #   category_2_folder/
+    #     file_43.txt file_44.txt ...
+    #
+    # As an example, a SentenceCorpus dataset from
+    # https://archive.ics.uci.edu/ml/datasets/Sentence+Classification
+    # has been used. The dataset includes following 3 domains:
+    # arxiv, jdm and plos
+    container_path: ../../data/input/SentenceCorpus
+    categories:
+    shuffle: True
+    random_state: 42
+
